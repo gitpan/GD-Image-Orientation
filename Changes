@@ -1,5 +1,8 @@
 Revision history for Perl extension GD::Image::Orientation.
 
+0.04  Sun Mar 20 21:13:15 2005
+	- fixed up Makefile to have GD as a prereq
+
 0.03  Mon Jan 24 19:10:50 2005
         - removed Makefile.PL perl version restriction
 
