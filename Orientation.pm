@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use GD;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 sub VERSION { $VERSION; }
 
 sub GD::Image::vertical {
