@@ -4,12 +4,15 @@ use strict;
 use warnings;
 use GD;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
+sub VERSION { $VERSION; }
 
 sub GD::Image::vertical {
     my $gdo = shift;
-    if(!$gdo->isvertcal(1)) {
-        if(shift) { return $gdo->copyRotate270 } 
+    my $ccw = shift || 0;
+    my $dosq = shift() ? 0 : 1;
+    if(!$gdo->isvertical($dosq)) {
+        if($ccw) { return $gdo->copyRotate270 } 
         else { return $gdo->copyRotate90 }
     }
     return $gdo;
@@ -17,8 +20,10 @@ sub GD::Image::vertical {
 
 sub GD::Image::horizontal {
     my $gdo = shift;
-    if(!$gdo->ishorizontal(1)) {
-        if(shift) { return $gdo->copyRotate270 } 
+    my $ccw = shift || 0;
+    my $dosq = shift() ? 0 : 1;
+    if(!$gdo->ishorizontal($dosq)) {
+        if($ccw) { return $gdo->copyRotate270 } 
         else { return $gdo->copyRotate90 }
     }
     return $gdo;
@@ -48,7 +53,7 @@ sub GD::Image::orientation {
     my $gdo = shift;
     return 'square' if $gdo->issquare;
     return 'vertical' if $gdo->isvertical;
-    return 'horizontal' if !$gdo->ishorizontal;
+    return 'horizontal' if $gdo->ishorizontal;
     return undef; # should never get here 
 }
 
@@ -117,6 +122,11 @@ It returns a new GD::Image object if modified or the original object if its alre
     my $vert_img = $img->vertical(1); # rotate $img counter clockwise 90 degrees if its horizontal
     $img = $img->vertical; # rotate $img clockwise 90 degrees if its horizontal, modifying the original object
 
+If the second argument is true it will rotate it even if its sqare:
+
+    my $vert_img = $img->vertical(0,1); # rotate $img clockwise if its horizontal or square
+    my $vert_img = $img->vertical(1,1); # rotate $img counter clockwise if its horizontal or square
+
 =head2 horizontal()
 
 If the image is vertical it is rotated 90 degrees clockwise to become horizontal.
@@ -128,6 +138,10 @@ It returns a new GD::Image object if modified or the original object if its alre
     my $hori_img = $img->horizontal(1); # rotate $img counter clockwise 90 degrees if its vertical
     $img = $img->horizontal; # rotate $img clockwise 90 degrees if its vertical, modifying the original object
 
+If the second argument is true it will rotate it even if its square:
+
+    my $vert_img = $img->horizontal(0,1); # rotate $img clockwise if its vertical or square
+    my $vert_img = $img->horizontal(1,1); # rotate $img counter clockwise if its vertical or square
 
 =head1 TO DO
 
