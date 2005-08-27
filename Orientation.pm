@@ -4,8 +4,7 @@ use strict;
 use warnings;
 use GD;
 
-our $VERSION = '0.04';
-sub VERSION { $VERSION; }
+our $VERSION = '0.05';
 
 sub GD::Image::vertical {
     my $gdo = shift;
